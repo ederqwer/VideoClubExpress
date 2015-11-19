@@ -173,7 +173,7 @@ Usuario usr;
             System.out.println(e);
         }
         if(start)  usr.setVisible(true);
-        else
+        
     }//GEN-LAST:event_bt1ActionPerformed
 
     /**
