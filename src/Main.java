@@ -7,13 +7,26 @@
  *
  * @author AllienWare
  */
+import java.sql.*;
+import javax.swing.*;
 public class Main extends javax.swing.JFrame {
-
+String path;
+String url;
+Connection conexion;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+        path=System.getProperty("user.dir");
+        path+="\\videoclub.accdb";
+        url = "jdbc:odbc:;DRIVER=Microsoft Access Driver (*.mdb, *.accdb);DBQ=" + path;
+        try{
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            conexion=DriverManager.getConnection(url);
+        }catch(Exception e){
+            System.err.println(e);
+        }
     }
 
     /**
@@ -43,6 +56,11 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("Usuario");
 
         bt1.setText("Aceptar");
+        bt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt1ActionPerformed(evt);
+            }
+        });
 
         bt2.setText("Crear Acc");
         bt2.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +125,13 @@ public class Main extends javax.swing.JFrame {
     private void bt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bt2ActionPerformed
+
+    private void bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_bt1ActionPerformed
 
     /**
      * @param args the command line arguments
