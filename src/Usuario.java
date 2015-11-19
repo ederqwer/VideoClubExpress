@@ -12,8 +12,15 @@ public class Usuario extends javax.swing.JFrame {
     /**
      * Creates new form Usuario
      */
+    
+    String path;
+    void putPath(String var){
+        path = var;
+        
+    }
     public Usuario() {
         initComponents();
+        
     }
 
     /**
@@ -66,6 +73,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Eras Light ITC", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Navegación");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -227,6 +239,11 @@ public class Usuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        System.out.println(path);
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

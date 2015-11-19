@@ -8,28 +8,43 @@
  * @author AllienWare
  */
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 public class Main extends javax.swing.JFrame {
-String path;
-String url;
-Connection conexion;
+    String path, url;
+    Connection conn;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        path=System.getProperty("user.dir");
-        path+="\\videoclub.accdb";
-        System.out.println(path);
-        url = "jdbc:odbc:Driver=Microsoft Access Driver (*.mdb, *.accdb);DBQ="+path;
+        usr = new Usuario();
+        
         try{
-            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-            conexion=DriverManager.getConnection(url);
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            usr.putPath(path);
+          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+        System.out.println("si");
+        
+            System.out.println(path);
+        url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+        System.out.println(path);
+        System.out.println("no");
+        conn = DriverManager.getConnection(url);
+        System.out.println("jodER!");  
         }catch(Exception e){
-            System.err.println(e);
+            System.out.println(e);
         }
+        
     }
-
+    void esteesparainsertar(){
+//         Statement st= conn.createStatement();
+//        String up = "INSERT into administrador(Password,Nombre,Fecha,Direccion,Telefono) VALUES('"+password.getText()+"','"+nombre.getText()+"','"+fecha.getText()+"','"+direccion.getText()+"','"+telefono.getText()+"')";
+//        st.executeUpdate(up);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,11 +141,29 @@ Connection conexion;
     private void bt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bt2ActionPerformed
+Usuario usr;
 
     private void bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt1ActionPerformed
-        // TODO add your handling code here:
-        
-        
+        String id = txt1.getText();
+        String pw = txt2.getText();
+        String cad  ="SELECT Administrador.Id, Administrador.Password FROM Administrador";
+            boolean start = false;
+        try{
+            PreparedStatement pstm = conn.prepareStatement( cad );
+            ResultSet res = pstm.executeQuery(); 
+            while(res.next()){
+                String x = res.getString("Id");
+                String y = res.getString("Password");
+                System.out.println(x +" "+y);
+                if(x.contains(id) && y.contains(pw)){
+                    start = true; break;
+                }
+                
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        if(start)  usr.setVisible(true);
         
     }//GEN-LAST:event_bt1ActionPerformed
 
