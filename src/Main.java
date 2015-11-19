@@ -20,7 +20,8 @@ Connection conexion;
         initComponents();
         path=System.getProperty("user.dir");
         path+="\\videoclub.accdb";
-        url = "jdbc:odbc:;DRIVER=Microsoft Access Driver (*.mdb, *.accdb);DBQ=" + path;
+        System.out.println(path);
+        url = "jdbc:odbc:Driver=Microsoft Access Driver (*.mdb, *.accdb);DBQ="+path;
         try{
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             conexion=DriverManager.getConnection(url);
