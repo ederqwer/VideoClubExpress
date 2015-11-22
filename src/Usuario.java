@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -38,7 +41,7 @@ public class Usuario extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         rtitulo = new javax.swing.JRadioButton();
         rid = new javax.swing.JRadioButton();
-        txtconsulta = new javax.swing.JTextField();
+        lblarticulo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -55,6 +58,7 @@ public class Usuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
+        lblcliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,13 +86,19 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
-        txtconsulta.setBackground(new java.awt.Color(230, 230, 230));
-        txtconsulta.setFont(new java.awt.Font("Arial", 2, 11)); // NOI18N
-        txtconsulta.setForeground(new java.awt.Color(153, 153, 153));
-        txtconsulta.setText("Ingresa Texto...");
-        txtconsulta.addKeyListener(new java.awt.event.KeyAdapter() {
+        lblarticulo.setBackground(new java.awt.Color(230, 230, 230));
+        lblarticulo.setFont(new java.awt.Font("Arial", 2, 11)); // NOI18N
+        lblarticulo.setForeground(new java.awt.Color(153, 153, 153));
+        lblarticulo.setText("Ingresa Articulo...");
+        lblarticulo.setToolTipText("Texto...");
+        lblarticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblarticuloActionPerformed(evt);
+            }
+        });
+        lblarticulo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtconsultaKeyTyped(evt);
+                lblarticuloKeyTyped(evt);
             }
         });
 
@@ -98,6 +108,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel8.setText("Comprar");
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Eras Medium ITC", 0, 11)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
@@ -105,6 +120,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel9.setText("Entregar");
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Eras Medium ITC", 0, 11)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
@@ -112,6 +132,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel10.setText("Rentar");
         jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Eras Medium ITC", 0, 11)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
@@ -119,6 +144,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel11.setText("Consultar");
         jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -148,19 +178,19 @@ public class Usuario extends javax.swing.JFrame {
                         .addGap(0, 18, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(txtconsulta)))
+                        .addComponent(lblarticulo)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtconsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(lblarticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rid)
                     .addComponent(rtitulo))
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel11))
@@ -251,9 +281,14 @@ public class Usuario extends javax.swing.JFrame {
 
         jLabel7.setForeground(new java.awt.Color(226, 226, 226));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/questionbook32.png"))); // NOI18N
-        jLabel7.setText("Consultar Cliente");
+        jLabel7.setText("Entra cliente");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -264,13 +299,13 @@ public class Usuario extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(147, 147, 147)
-                .addComponent(jLabel4)
-                .addGap(130, 130, 130)
+                .addGap(121, 121, 121)
                 .addComponent(jLabel6)
-                .addGap(114, 114, 114)
+                .addGap(119, 119, 119)
+                .addComponent(jLabel4)
+                .addGap(104, 104, 104)
                 .addComponent(jLabel7)
-                .addGap(64, 64, 64))
+                .addGap(111, 111, 111))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,19 +349,23 @@ public class Usuario extends javax.swing.JFrame {
         list.setBackground(new java.awt.Color(249, 249, 216));
         jScrollPane1.setViewportView(list);
 
+        lblcliente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane1)))
+                    .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -340,7 +379,8 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -349,7 +389,7 @@ public class Usuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,14 +409,63 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_ridActionPerformed
     
     boolean bandaux = true;
-    private void txtconsultaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconsultaKeyTyped
+    private void lblarticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblarticuloKeyTyped
         // TODO add your handling code here:
         if(bandaux){
-           String cad =  txtconsulta.getText();
-           txtconsulta.setText("");
+           String cad =  lblarticulo.getText();
+           lblarticulo.setText("");
            bandaux = false;
         }
-    }//GEN-LAST:event_txtconsultaKeyTyped
+    }//GEN-LAST:event_lblarticuloKeyTyped
+
+    private void lblarticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblarticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblarticuloActionPerformed
+
+    boolean login = false;
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        //click compra
+        if(login){
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        //click consulta
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        if(login){
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
+        }
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        if(login){
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
+        }
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        // intenta ingresar cliente
+        String cliente = JOptionPane.showInputDialog("Ingrese id");
+        //si cliente existe
+        String info = "nombre";
+        lblcliente.setText("Cliente: "+info);
+        //sino
+            //mensaje error, no existe cliente
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -432,9 +521,10 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField lblarticulo;
+    private javax.swing.JLabel lblcliente;
     private javax.swing.JList list;
     private javax.swing.JRadioButton rid;
     private javax.swing.JRadioButton rtitulo;
-    private javax.swing.JTextField txtconsulta;
     // End of variables declaration//GEN-END:variables
 }

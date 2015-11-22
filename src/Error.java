@@ -1,3 +1,7 @@
+
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +24,8 @@ public class Error extends javax.swing.JFrame {
     public Error() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo32px.png"));
+        setIconImage(icon);
     }
 
     /**
@@ -114,7 +120,7 @@ public class Error extends javax.swing.JFrame {
 
     private void btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnActionPerformed
 
     /**
