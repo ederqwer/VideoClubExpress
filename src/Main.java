@@ -120,7 +120,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(69, 53, 206));
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Login");
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));

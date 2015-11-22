@@ -1,5 +1,7 @@
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,9 +23,11 @@ public class Usuario extends javax.swing.JFrame {
         path = var;
         
     }
+    
+    DefaultListModel model = new DefaultListModel();
     public Usuario() {
         initComponents();
-        
+        list.setModel(model);
     }
 
     /**
@@ -432,10 +436,12 @@ public class Usuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
         }
     }//GEN-LAST:event_jLabel8MouseClicked
-
+     
+    
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         // TODO add your handling code here:
         //click consulta
+        
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
