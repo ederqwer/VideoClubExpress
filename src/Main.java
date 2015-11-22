@@ -257,7 +257,10 @@ Usuario usr;
         }catch(Exception e){
             System.out.println(e);
         }
-        if(start)  usr.setVisible(true);
+        if(start)  {
+            usr.setVisible(true);
+            this.dispose();
+        }
         else{
             err.setMsg("Nombre de usuario o contraseña no válidos!!");
             err.setVisible(true);
