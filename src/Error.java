@@ -38,6 +38,7 @@ public class Error extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Error");
+        setAlwaysOnTop(true);
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
