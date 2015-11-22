@@ -37,6 +37,11 @@ PreparedStatement pstm;
         list1.setModel(model1);
         list2.setModel(model2);
         list3.setModel(model3);
+        rellenar();
+        
+    }
+    
+    void rellenar(){
         try{
             conexion();
             link ("SELECT * FROM usuarios");
@@ -48,6 +53,7 @@ PreparedStatement pstm;
            conexion();
            link ("SELECT * FROM articulos");
            while(res.next()){
+               
                model2.addElement(res.getString("Id")+" "+res.getString("titulo"));
             }
            conn.close();
@@ -57,11 +63,9 @@ PreparedStatement pstm;
                model3.addElement(res.getString("Id")+" "+res.getString("nombre"));
             }
            conn.close();
-           conexion();
         }catch(Exception e){
             System.out.println(e);
         }
-        
     }
     void conexion() {
         try{
@@ -101,16 +105,27 @@ PreparedStatement pstm;
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         list1 = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
+        agregar1 = new javax.swing.JButton();
+        modificar1 = new javax.swing.JButton();
+        eliminar1 = new javax.swing.JButton();
+        buscar1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         list2 = new javax.swing.JList();
+        modificar2 = new javax.swing.JButton();
+        agregar2 = new javax.swing.JButton();
+        eliminar2 = new javax.swing.JButton();
+        buscar2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         list3 = new javax.swing.JList();
+        agregar3 = new javax.swing.JButton();
+        modificar3 = new javax.swing.JButton();
+        eliminar3 = new javax.swing.JButton();
+        buscar3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -126,10 +141,52 @@ PreparedStatement pstm;
 
         jScrollPane1.setViewportView(list1);
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperplus32.png"))); // NOI18N
+        agregar1.setText("Agregar");
+        agregar1.setContentAreaFilled(false);
+        agregar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        agregar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        agregar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregar1MouseClicked(evt);
+            }
+        });
+        agregar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                agregar1ActionPerformed(evt);
+            }
+        });
+
+        modificar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperpencil32.png"))); // NOI18N
+        modificar1.setText("Modificar");
+        modificar1.setContentAreaFilled(false);
+        modificar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        modificar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificar1ActionPerformed(evt);
+            }
+        });
+
+        eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperminus32.png"))); // NOI18N
+        eliminar1.setText("Eliminar");
+        eliminar1.setContentAreaFilled(false);
+        eliminar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        eliminar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminar1ActionPerformed(evt);
+            }
+        });
+
+        buscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaper32.png"))); // NOI18N
+        buscar1.setText("Buscar");
+        buscar1.setContentAreaFilled(false);
+        buscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar1ActionPerformed(evt);
             }
         });
 
@@ -140,10 +197,16 @@ PreparedStatement pstm;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(agregar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modificar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eliminar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscar1)
+                        .addGap(0, 3, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -151,12 +214,60 @@ PreparedStatement pstm;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jButton1)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(agregar1)
+                    .addComponent(modificar1)
+                    .addComponent(eliminar1)
+                    .addComponent(buscar1))
+                .addGap(20, 20, 20))
         );
 
         jScrollPane2.setViewportView(list2);
+
+        modificar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperpencil32.png"))); // NOI18N
+        modificar2.setText("Modificar");
+        modificar2.setContentAreaFilled(false);
+        modificar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        modificar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificar2ActionPerformed(evt);
+            }
+        });
+
+        agregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperplus32.png"))); // NOI18N
+        agregar2.setText("Agregar");
+        agregar2.setContentAreaFilled(false);
+        agregar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        agregar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        agregar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar2ActionPerformed(evt);
+            }
+        });
+
+        eliminar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperminus32.png"))); // NOI18N
+        eliminar2.setText("Eliminar");
+        eliminar2.setContentAreaFilled(false);
+        eliminar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        eliminar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminar2ActionPerformed(evt);
+            }
+        });
+
+        buscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaper32.png"))); // NOI18N
+        buscar2.setText("Buscar");
+        buscar2.setContentAreaFilled(false);
+        buscar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buscar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -164,15 +275,31 @@ PreparedStatement pstm;
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(agregar2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modificar2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eliminar2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscar2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(agregar2)
+                    .addComponent(modificar2)
+                    .addComponent(eliminar2)
+                    .addComponent(buscar2))
+                .addGap(23, 23, 23))
         );
 
         jLabel1.setFont(new java.awt.Font("Eras Medium ITC", 0, 14)); // NOI18N
@@ -189,13 +316,66 @@ PreparedStatement pstm;
 
         jScrollPane4.setViewportView(list3);
 
+        agregar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperplus32.png"))); // NOI18N
+        agregar3.setText("Agregar");
+        agregar3.setContentAreaFilled(false);
+        agregar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        agregar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        agregar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar3ActionPerformed(evt);
+            }
+        });
+
+        modificar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperpencil32.png"))); // NOI18N
+        modificar3.setText("Modificar");
+        modificar3.setContentAreaFilled(false);
+        modificar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        modificar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificar3ActionPerformed(evt);
+            }
+        });
+
+        eliminar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperminus32.png"))); // NOI18N
+        eliminar3.setText("Eliminar");
+        eliminar3.setContentAreaFilled(false);
+        eliminar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        eliminar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminar3ActionPerformed(evt);
+            }
+        });
+
+        buscar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaper32.png"))); // NOI18N
+        buscar3.setText("Buscar");
+        buscar3.setContentAreaFilled(false);
+        buscar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buscar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane4)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(agregar3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modificar3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eliminar3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscar3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -203,7 +383,13 @@ PreparedStatement pstm;
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(agregar3)
+                    .addComponent(modificar3)
+                    .addComponent(eliminar3)
+                    .addComponent(buscar3))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -220,9 +406,9 @@ PreparedStatement pstm;
                         .addComponent(jLabel1)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(41, 41, 41)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(141, 141, 141)
@@ -244,19 +430,20 @@ PreparedStatement pstm;
                         .addContainerGap()
                         .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,10 +466,75 @@ PreparedStatement pstm;
         Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_formWindowClosing
+    
+    void update() throws SQLException{
+        System.out.println("aki");
+        conn.close();
+        model1 = null;
+        model2 = null;
+        model3 = null;
+        model1 = new DefaultListModel();
+        model2 = new DefaultListModel();
+        model3 = new DefaultListModel();
+        list1.setModel(model1);
+        list2.setModel(model2);
+        list3.setModel(model3);
+        rellenar();
+    }
+    private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
+        nuevousuario user = new nuevousuario();
+        user.setVisible(true);
+        user.setadm(this);
+    }//GEN-LAST:event_agregar1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void modificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificar1ActionPerformed
+
+    private void eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminar1ActionPerformed
+
+    private void buscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscar1ActionPerformed
+
+    private void agregar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_agregar2ActionPerformed
+
+    private void buscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscar2ActionPerformed
+
+    private void eliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminar2ActionPerformed
+
+    private void modificar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificar2ActionPerformed
+
+    private void eliminar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminar3ActionPerformed
+
+    private void modificar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificar3ActionPerformed
+
+    private void agregar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_agregar3ActionPerformed
+
+    private void buscar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscar3ActionPerformed
+
+    private void agregar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregar1MouseClicked
+        // TODO add your handling code here:
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_agregar1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -320,7 +572,15 @@ PreparedStatement pstm;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton agregar1;
+    private javax.swing.JButton agregar2;
+    private javax.swing.JButton agregar3;
+    private javax.swing.JButton buscar1;
+    private javax.swing.JButton buscar2;
+    private javax.swing.JButton buscar3;
+    private javax.swing.JButton eliminar1;
+    private javax.swing.JButton eliminar2;
+    private javax.swing.JButton eliminar3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -341,5 +601,8 @@ PreparedStatement pstm;
     private javax.swing.JList list1;
     private javax.swing.JList list2;
     private javax.swing.JList list3;
+    private javax.swing.JButton modificar1;
+    private javax.swing.JButton modificar2;
+    private javax.swing.JButton modificar3;
     // End of variables declaration//GEN-END:variables
 }
