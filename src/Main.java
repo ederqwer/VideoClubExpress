@@ -14,12 +14,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 public class Main extends javax.swing.JFrame {
-    String path, url;
     Connection conn;
+    Error err;
+    String path, cad, url;
+    PreparedStatement pstm;
+    ResultSet res;
+     void conexion(String inf){
+     try{
+                        cad  =inf;
+                path = System.getProperty("user.dir");
+                path += "\\videoclub.accdb";
+                  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+                    System.out.println(path);
+                url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+                conn = DriverManager.getConnection(url);
+                pstm = conn.prepareStatement( cad );
+                res = pstm.executeQuery(); 
+                
+            }catch(Exception e){
+                System.out.println(e);
+            }
+ }
     /**
      * Creates new form Main
      */
-    Error err;
     public Main() {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo32px.png"));
@@ -27,16 +46,7 @@ public class Main extends javax.swing.JFrame {
         usr = new Usuario();
         err=new Error();
         this.setLocationRelativeTo(null);
-        try{
-            path = System.getProperty("user.dir");
-            path += "\\videoclub.accdb";
-            usr.putPath(path);
-          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-        url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-        conn = DriverManager.getConnection(url);
-        }catch(Exception e){
-            System.out.println(e);
-        }
+        
         
     }
     void esteesparainsertar(){
@@ -223,22 +233,37 @@ Usuario usr;
     private void bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt1ActionPerformed
         String id = txt1.getText();
         String pw = txt2.getText();
-        String cad  ="SELECT Administrador.Id, Administrador.Password FROM Administrador";
+        conexion("SELECT Administrador.Id, Administrador.Password FROM Administrador");
             boolean start = false;
         if(id.equals("") && pw.equals("")){
             err.setMsg("Debes ingresar el nombre de usuario y la contraseña");
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.err.println(e);
+            }
             err.setVisible(true);
+            
         }else if(id.equals("")){
             err.setMsg("Nombre de usuario incorrecto");
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.err.println(e);
+            }
             err.setVisible(true);
+            
         }else if(pw.equals("")){
             err.setMsg("Contraseña incorrecta");
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.err.println(e);
+            }
             err.setVisible(true);
         }
         else{    
         try{
-            PreparedStatement pstm = conn.prepareStatement( cad );
-            ResultSet res = pstm.executeQuery(); 
             while(res.next()){
                 String x = res.getString("Id");
                 String y = res.getString("Password");
@@ -247,16 +272,22 @@ Usuario usr;
                 }
                 
             }
+            conn.close();
         }catch(Exception e){
             System.out.println(e);
         }
         if(start)  {
             usr.setVisible(true);
-            usr.setConnection(conn);
+            
             this.dispose();
         }
         else{
             err.setMsg("Nombre de usuario o contraseña no válidos!!");
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.err.println(e);
+            }
             err.setVisible(true);
         }
         }

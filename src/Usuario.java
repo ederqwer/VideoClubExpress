@@ -20,15 +20,27 @@ public class Usuario extends javax.swing.JFrame {
      */
     Connection conn;
     Error err;
-    String path;
-    void setConnection (Connection conexion){
-        this.conn=conexion;
+    String path, cad, url;
+    PreparedStatement pstm;
+    ResultSet res;
+
+    void conexion(String inf) {
+        try {
+            cad = inf;
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+            System.out.println(path);
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+            pstm = conn.prepareStatement(cad);
+            res = pstm.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
-    void putPath(String var){
-        path = var;
-        
-    }
-    
     DefaultListModel model = new DefaultListModel();
     public Usuario() {
         initComponents();
@@ -449,16 +461,13 @@ public class Usuario extends javax.swing.JFrame {
         //click consulta
         String y=lblarticulo.getText();
         DefaultListModel m=new DefaultListModel();
-        String cad;
+        conexion("SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos");
         String s;
         if(rid.isSelected()){
             try{
-                cad  ="SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos";
-                PreparedStatement pstm = conn.prepareStatement( cad );
-                ResultSet res = pstm.executeQuery();
                 while(res.next()){
                     String x = res.getString("Id");
-                    if(x.contains(y)){
+                    if(x.toUpperCase().contains(y.toUpperCase())){
                         String t=res.getString("titulo");
                         String pc=res.getString("costcompra");
                         String cc=res.getString("cantcompra");
@@ -470,17 +479,15 @@ public class Usuario extends javax.swing.JFrame {
 
                 }
                 list.setModel(m);
+                conn.close();
             }catch (Exception e){
                 System.err.println(e);
             }
         }else if(rtitulo.isSelected()){
             try{
-                cad  ="SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos";
-                PreparedStatement pstm = conn.prepareStatement( cad );
-                ResultSet res = pstm.executeQuery();
                 while(res.next()){
                     String t=res.getString("titulo");
-                    if(t.contains(y)){
+                    if(t.toUpperCase().contains(y.toUpperCase())){
                         String x=res.getString("Id");
                         String pc=res.getString("costcompra");
                         String cc=res.getString("cantcompra");
@@ -492,11 +499,17 @@ public class Usuario extends javax.swing.JFrame {
 
                 }
                 list.setModel(m);
+                conn.close();
             }catch (Exception e){
                 System.err.println(e);
             }
         }else{
             err.setMsg("Debes seleccionar ID o Titulo");
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.err.println(e);
+            }
             err.setVisible(true);
         }
         
