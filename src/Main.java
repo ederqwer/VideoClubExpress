@@ -32,14 +32,8 @@ public class Main extends javax.swing.JFrame {
             path += "\\videoclub.accdb";
             usr.putPath(path);
           Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-        System.out.println("si");
-        
-            System.out.println(path);
         url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-        System.out.println(path);
-        System.out.println("no");
         conn = DriverManager.getConnection(url);
-        System.out.println("jodER!");  
         }catch(Exception e){
             System.out.println(e);
         }
@@ -248,7 +242,6 @@ Usuario usr;
             while(res.next()){
                 String x = res.getString("Id");
                 String y = res.getString("Password");
-                System.out.println(x +" "+y);
                 if(x.contains(id) && y.contains(pw)){
                     start = true; break;
                 }
@@ -259,6 +252,7 @@ Usuario usr;
         }
         if(start)  {
             usr.setVisible(true);
+            usr.setConnection(conn);
             this.dispose();
         }
         else{

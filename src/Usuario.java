@@ -12,13 +12,18 @@ import javax.swing.ListModel;
  *
  * @author AllienWare
  */
+import java.sql.*;
 public class Usuario extends javax.swing.JFrame {
 
     /**
      * Creates new form Usuario
      */
-    
+    Connection conn;
+    Error err;
     String path;
+    void setConnection (Connection conexion){
+        this.conn=conexion;
+    }
     void putPath(String var){
         path = var;
         
@@ -28,6 +33,7 @@ public class Usuario extends javax.swing.JFrame {
     public Usuario() {
         initComponents();
         list.setModel(model);
+        err=new Error();
     }
 
     /**
@@ -441,6 +447,58 @@ public class Usuario extends javax.swing.JFrame {
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         // TODO add your handling code here:
         //click consulta
+        String y=lblarticulo.getText();
+        DefaultListModel m=new DefaultListModel();
+        String cad;
+        String s;
+        if(rid.isSelected()){
+            try{
+                cad  ="SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos";
+                PreparedStatement pstm = conn.prepareStatement( cad );
+                ResultSet res = pstm.executeQuery();
+                while(res.next()){
+                    String x = res.getString("Id");
+                    if(x.contains(y)){
+                        String t=res.getString("titulo");
+                        String pc=res.getString("costcompra");
+                        String cc=res.getString("cantcompra");
+                        String pr=res.getString("costrenta");
+                        String cr=res.getString("cantrenta");
+                        s="Id:"+x+"     Titulo:"+t+"     Precio de compra:"+pc+"     Cantidad para compra:"+cc+"     Precio de renta:"+pr+"     Cantidad para renta:"+cr;
+                        m.addElement(s);
+                    }
+
+                }
+                list.setModel(m);
+            }catch (Exception e){
+                System.err.println(e);
+            }
+        }else if(rtitulo.isSelected()){
+            try{
+                cad  ="SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos";
+                PreparedStatement pstm = conn.prepareStatement( cad );
+                ResultSet res = pstm.executeQuery();
+                while(res.next()){
+                    String t=res.getString("titulo");
+                    if(t.contains(y)){
+                        String x=res.getString("Id");
+                        String pc=res.getString("costcompra");
+                        String cc=res.getString("cantcompra");
+                        String pr=res.getString("costrenta");
+                        String cr=res.getString("cantrenta");
+                        s="Id:"+x+"     Titulo:"+t+"     Precio de compra:"+pc+"     Cantidad para compra:"+cc+"     Precio de renta:"+pr+"     Cantidad para renta:"+cr;
+                        m.addElement(s);
+                    }
+
+                }
+                list.setModel(m);
+            }catch (Exception e){
+                System.err.println(e);
+            }
+        }else{
+            err.setMsg("Debes seleccionar ID o Titulo");
+            err.setVisible(true);
+        }
         
     }//GEN-LAST:event_jLabel11MouseClicked
 
