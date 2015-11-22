@@ -19,12 +19,14 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    Error err;
     public Main() {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo32px.png"));
         setIconImage(icon);
         usr = new Usuario();
-        
+        err=new Error();
+        this.setLocationRelativeTo(null);
         try{
             path = System.getProperty("user.dir");
             path += "\\videoclub.accdb";
@@ -245,7 +247,10 @@ Usuario usr;
             System.out.println(e);
         }
         if(start)  usr.setVisible(true);
-        
+        else{
+            err.setMsg("Nombre de usuario o contraseña no válidos!!");
+            err.setVisible(true);
+        }
     }//GEN-LAST:event_bt1ActionPerformed
 
     /**
