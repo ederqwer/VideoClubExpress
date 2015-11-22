@@ -23,11 +23,15 @@ String cad;
 String url;
 ResultSet res;
 Connection conn;
+Usuario u;
 PreparedStatement pstm;
     /**
      * Creates new form nuevocliente
      */
 
+void setu (Usuario us){
+    u = us;
+}
  void conexion(String inf){
      try{
                         cad  =inf;
@@ -95,7 +99,7 @@ PreparedStatement pstm;
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -200,7 +204,6 @@ PreparedStatement pstm;
                         .addComponent(lblid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(2, 2, 2))
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -233,11 +236,13 @@ PreparedStatement pstm;
             String cad = "VALUES ('"+lblid.getText()+"','"+t1.getText()+"','"+t2.getText()+"','"+t3.getText()+"',+'"+t4.getText()+"');";
             System.out.println(cad);
             conexion("INSERT INTO clientes (Id, nombre, fecha, direccion, telefono) "+cad);
+            
+            
             try {
                 conn.close();
             } catch (SQLException ex) {
                 Logger.getLogger(nuevocliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }u.setVisible(true); this.dispose(); 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
