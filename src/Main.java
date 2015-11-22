@@ -119,8 +119,8 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 153));
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(69, 53, 206));
         jLabel3.setText("Login");
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
