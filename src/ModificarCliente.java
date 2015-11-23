@@ -38,12 +38,30 @@ Connection conn;
             System.out.println(e);
         }
     }
+    void mod(String inf) {
+        try {
+            cad = inf;
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+            System.out.println(path);
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+            pstm = conn.prepareStatement(cad);
+            pstm.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     /**
      * Creates new form ModificarCliente
      */
     public ModificarCliente() {
         initComponents();
         err=new Error();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -86,6 +104,8 @@ Connection conn;
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Modificar Cliente");
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -268,17 +288,16 @@ Connection conn;
             err.setMsg("Debes buscar un cliente");
             err.setVisible(true);
         } else {
-            conexion("SELECT clientes.Id, clientes.nombre, clientes.fecha, clientes.direccion, clientes.telefono FROM clientes WHERE Id LIKE"+id+"");
-            try{
-                res.updateString("nombre", nombre.getText());
-                res.updateString("fecha", fecha.getText());
-                res.updateString("direccion", direccion.getText());
-                res.updateString("telefono", telefono.getText());
-                res.updateRow();
-                conn.close();
-            }catch(Exception e){
-                System.err.println(e);
-            }
+            conexion("UPDATE clientes SET nombre='"+nombre.getText()+"', fecha='"+fecha.getText()+"', direccion='"+direccion.getText()+"', telefono='"+telefono.getText()+"' WHERE Id ='"+id+"'");
+//            try{
+//                res.updateString("nombre", nombre.getText());
+//                res.updateString("fecha", fecha.getText());
+//                res.updateString("direccion", direccion.getText());
+//                res.updateString("telefono", telefono.getText());
+//                res.updateRow();
+//            }catch(Exception e){
+//                System.err.println(e);
+//            }
             idm.setText("");
             nombre.setText("");
             fecha.setText("");
