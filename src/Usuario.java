@@ -61,6 +61,7 @@ public class Usuario extends javax.swing.JFrame {
         lis=new Lista();
         rentas=new DefaultListModel();
         total=0;
+        entregar.setLocationRelativeTo(null);
     }
 
     /**
@@ -73,6 +74,12 @@ public class Usuario extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        entregar = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        entregaid = new javax.swing.JTextField();
+        entregabtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -98,6 +105,84 @@ public class Usuario extends javax.swing.JFrame {
         lblcliente = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+
+        entregar.setTitle("Artículo a entregar");
+        entregar.setMinimumSize(new java.awt.Dimension(400, 173));
+        entregar.setResizable(false);
+
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel12.setText("ID:");
+
+        entregaid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entregaidActionPerformed(evt);
+            }
+        });
+
+        entregabtn.setText("Aceptar");
+        entregabtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entregabtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(entregaid, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(entregabtn)
+                        .addGap(150, 150, 150))))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(entregaid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(18, 18, 18)
+                .addComponent(entregabtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout entregarLayout = new javax.swing.GroupLayout(entregar.getContentPane());
+        entregar.getContentPane().setLayout(entregarLayout);
+        entregarLayout.setHorizontalGroup(
+            entregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        entregarLayout.setVerticalGroup(
+            entregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -418,6 +503,13 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Cancelar transacciones");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -435,6 +527,8 @@ public class Usuario extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -450,16 +544,17 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 9, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jButton2)
+                            .addComponent(jButton3))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -531,7 +626,7 @@ public class Usuario extends javax.swing.JFrame {
                             int cant=Integer.parseInt(res.getString("cantcompra"));
                             if(cant>0){
                                 float pc=Float.parseFloat(res.getString("costcompra"));
-                                compras.addElement("ID: "+id+"     $"+pc);
+                                compras.addElement("ID:"+id+"     $"+pc);
                                 lis.setmodl(compras, pc);
                                 total+=pc;
                                 lis.setVisible(true);
@@ -638,7 +733,7 @@ public class Usuario extends javax.swing.JFrame {
                             int cant=Integer.parseInt(res.getString("cantrenta"));
                             if(cant>0){
                                 float pc=Float.parseFloat(res.getString("costrenta"));
-                                rentas.addElement("ID: "+id+"     $"+pc);
+                                rentas.addElement("ID:"+id+"     $"+pc);
                                 lis.setmodl2(rentas, pc);
                                 total+=pc;
                                 lis.setVisible(true);
@@ -662,7 +757,7 @@ public class Usuario extends javax.swing.JFrame {
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
         if (login) {
-
+            entregar.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
         }
@@ -725,7 +820,107 @@ public class Usuario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        conexion("SELECT * FROM articulos");
+        String id, idc;
+        int cc, cr;
+        try{
+            while(res.next()){
+                idc=res.getString("Id");
+                cc=Integer.parseInt(res.getString("cantcompra"));
+                cr=Integer.parseInt(res.getString("cantrenta"));
+                for (int i = 0; i < compras.getSize(); i++) {
+                    String seleccion = compras.get(i).toString();
+                    id = "";
+                    char c;
+                    while ((c = seleccion.charAt(i)) != ' ') {
+                        if(i>2)
+                        {id += c;}
+                        i++;
+                    }
+                    if(idc.equals(id)){
+                        cc--;
+                    }
+                }
+                for (int i = 0; i < rentas.getSize(); i++) {
+                    String seleccion = rentas.get(i).toString();
+                    id = "";
+                    char c;
+                    while ((c = seleccion.charAt(i)) != ' ') {
+                        if(i>2)
+                        {id += c;}
+                        i++;
+                    }
+                    if(idc.equals(id)){
+                        cr--;
+                    }
+                }
+                conexion("UPDATE articulos SET cantcompra='"+cc+"', cantrenta='"+cr+"' WHERE Id='"+idc+"'");
+                conn.close();
+            }
+            
+           
+            
+        }catch (Exception d){
+            System.err.println(d);
+        }
+        total=0;
+        compras=new DefaultListModel();
+        rentas=new DefaultListModel();
+        lis.reset();
+        lis.dispose();
+        login=false;
+        lblcliente.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        total=0;
+        compras=new DefaultListModel();
+        rentas=new DefaultListModel();
+        lis.reset();
+        lis.dispose();
+        login=false;
+        lblcliente.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void entregaidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregaidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entregaidActionPerformed
+
+    private void entregabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregabtnActionPerformed
+        // TODO add your handling code here:
+        String ide=entregaid.getText();
+        if(ide.isEmpty()){
+            err.setMsg("Debes ingresar la ID");
+            err.setVisible(true);
+        }else{
+            conexion("SELECT * FROM articulos");
+        String id;
+        boolean ban=true;
+        int  cr=0;
+        try{
+            while(res.next() && ban){
+                id=res.getString("Id");
+                if(id.equals(ide)){
+                    cr=Integer.parseInt(res.getString("cantrenta"));
+                    cr++;
+                    ban=false;
+                }
+            }
+            if(ban){
+                err.setMsg("ID no encontrada");
+                err.setVisible(true);
+            }else{
+                conexion("UPDATE articulos SET  cantrenta='"+cr+"' WHERE Id='"+ide+"'");
+            }
+            conn.close();
+        }catch(Exception j){
+            System.err.println(j);
+        }
+        entregaid.setText("");
+        entregar.setVisible(false);
+        }
+    }//GEN-LAST:event_entregabtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -763,11 +958,16 @@ public class Usuario extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton entregabtn;
+    private javax.swing.JTextField entregaid;
+    private javax.swing.JDialog entregar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -779,6 +979,8 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

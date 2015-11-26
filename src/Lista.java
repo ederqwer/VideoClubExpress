@@ -24,6 +24,12 @@ float total;
         total+=pc;
         tot.setText("$"+total);
     }
+    void reset(){
+        total=0;
+        DefaultListModel l= new DefaultListModel();
+        list.setModel(l);
+        list2.setModel(l);
+    }
     public Lista() {
         initComponents();
         total=0;
