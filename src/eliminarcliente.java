@@ -74,7 +74,7 @@ public class eliminarcliente extends javax.swing.JFrame {
 
         jLabel8.setText("jLabel8");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Cliente");
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));

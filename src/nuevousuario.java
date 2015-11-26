@@ -60,6 +60,7 @@ void setu (Usuario us){
     public nuevousuario()  {
         initComponents();
         adm = null;
+        this.setLocationRelativeTo(null);
         
         
     }
@@ -90,6 +91,8 @@ void setu (Usuario us){
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nuevo Usuario");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

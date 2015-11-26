@@ -1,18 +1,17 @@
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author AllienWare
  */
 import java.sql.*;
+
 public class Usuario extends javax.swing.JFrame {
 
     /**
@@ -23,7 +22,14 @@ public class Usuario extends javax.swing.JFrame {
     String path, cad, url;
     PreparedStatement pstm;
     ResultSet res;
-
+    nuevocliente nclient;
+    eliminarcliente delcl;
+    ModificarCliente modcl;
+    String idlog;
+    DefaultListModel compras;
+    DefaultListModel rentas;
+    Lista lis;
+    float total;
     void conexion(String inf) {
         try {
             cad = inf;
@@ -42,10 +48,19 @@ public class Usuario extends javax.swing.JFrame {
         }
     }
     DefaultListModel model = new DefaultListModel();
+
     public Usuario() {
         initComponents();
         list.setModel(model);
-        err=new Error();
+        nclient = new nuevocliente();
+        delcl = new eliminarcliente();
+        modcl = new ModificarCliente();
+        err = new Error();
+        compras=new DefaultListModel();
+        this.setLocationRelativeTo(null);
+        lis=new Lista();
+        rentas=new DefaultListModel();
+        total=0;
     }
 
     /**
@@ -81,8 +96,11 @@ public class Usuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
         lblcliente = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
@@ -101,6 +119,7 @@ public class Usuario extends javax.swing.JFrame {
         buttonGroup1.add(rid);
         rid.setFont(new java.awt.Font("Eras Medium ITC", 0, 11)); // NOI18N
         rid.setForeground(new java.awt.Color(51, 51, 51));
+        rid.setSelected(true);
         rid.setText("Id");
         rid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +182,7 @@ public class Usuario extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Eras Medium ITC", 0, 11)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search32.png"))); // NOI18N
-        jLabel11.setText("Consultar");
+        jLabel11.setText("Buscar");
         jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -183,13 +202,10 @@ public class Usuario extends javax.swing.JFrame {
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel7Layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jLabel11))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                        .addGap(44, 44, 44)
-                                        .addComponent(jLabel9))))
+                                .addGap(44, 44, 44)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11)))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -287,6 +303,11 @@ public class Usuario extends javax.swing.JFrame {
         jLabel5.setText("Nuevo Cliente");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(226, 226, 226));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linedpaperpencil32.png"))); // NOI18N
@@ -294,12 +315,22 @@ public class Usuario extends javax.swing.JFrame {
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel4.setVerifyInputWhenFocusTarget(false);
         jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         jLabel6.setForeground(new java.awt.Color(226, 226, 226));
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userminus32.png"))); // NOI18N
         jLabel6.setText("Eliminar Cliente");
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel7.setForeground(new java.awt.Color(226, 226, 226));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/questionbook32.png"))); // NOI18N
@@ -373,21 +404,39 @@ public class Usuario extends javax.swing.JFrame {
 
         lblcliente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Confirmar transacciones");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jScrollPane1)))
-                    .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -401,8 +450,16 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 9, Short.MAX_VALUE)
+                        .addComponent(lblcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -411,11 +468,13 @@ public class Usuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -429,14 +488,14 @@ public class Usuario extends javax.swing.JFrame {
     private void ridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ridActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ridActionPerformed
-    
+
     boolean bandaux = true;
     private void lblarticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblarticuloKeyTyped
         // TODO add your handling code here:
-        if(bandaux){
-           String cad =  lblarticulo.getText();
-           lblarticulo.setText("");
-           bandaux = false;
+        if (bandaux) {
+            String cad = lblarticulo.getText();
+            lblarticulo.setText("");
+            bandaux = false;
         }
     }//GEN-LAST:event_lblarticuloKeyTyped
 
@@ -448,87 +507,163 @@ public class Usuario extends javax.swing.JFrame {
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
         //click compra
-        if(login){
-            
-        }else{
+        int i=0;
+        boolean ban = true;
+        String id, idc;
+        if (login) {
+            if (list.isSelectionEmpty()) {
+                err.setMsg("Debes seleccionar un artículo");
+                err.setVisible(true);
+            } else {
+                String seleccion = list.getSelectedValue().toString();
+                id = "";
+                char c;
+                while ((c = seleccion.charAt(i)) != ' ') {
+                    if(i>2)
+                    {id += c;}
+                    i++;
+                }
+                conexion("SELECT * FROM articulos");
+                try {
+                    while (res.next() && ban) {
+                        idc = res.getString("Id");
+                        if (id.equals(idc)) {
+                            int cant=Integer.parseInt(res.getString("cantcompra"));
+                            if(cant>0){
+                                float pc=Float.parseFloat(res.getString("costcompra"));
+                                compras.addElement("ID: "+id+"     $"+pc);
+                                lis.setmodl(compras, pc);
+                                total+=pc;
+                                lis.setVisible(true);
+                            }else{
+                                err.setMsg("No hay articulos disponibles");
+                                err.setVisible(true);
+                            }
+                            ban=false;
+                        }
+                    }
+
+                } catch (Exception w) {
+                    System.err.println(w);
+                }
+            }
+        } else {
             JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
         }
     }//GEN-LAST:event_jLabel8MouseClicked
-     
-    
+
+
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         // TODO add your handling code here:
         //click consulta
-        String y=lblarticulo.getText();
-        DefaultListModel m=new DefaultListModel();
+        String y = lblarticulo.getText();
+        DefaultListModel m = new DefaultListModel();
         conexion("SELECT articulos.Id, articulos.titulo, articulos.costcompra, articulos.cantcompra, articulos.costrenta, articulos.cantrenta FROM articulos");
         String s;
-        if(rid.isSelected()){
-            try{
-                while(res.next()){
+        if (rid.isSelected()) {
+            try {
+                while (res.next()) {
                     String x = res.getString("Id");
-                    if(x.toUpperCase().contains(y.toUpperCase())){
-                        String t=res.getString("titulo");
-                        String pc=res.getString("costcompra");
-                        String cc=res.getString("cantcompra");
-                        String pr=res.getString("costrenta");
-                        String cr=res.getString("cantrenta");
-                        s="Id:"+x+"     Titulo:"+t+"     Precio de compra:"+pc+"     Cantidad para compra:"+cc+"     Precio de renta:"+pr+"     Cantidad para renta:"+cr;
+                    if (x.toUpperCase().contains(y.toUpperCase())) {
+                        String t = res.getString("titulo");
+                        String pc = res.getString("costcompra");
+                        String cc = res.getString("cantcompra");
+                        String pr = res.getString("costrenta");
+                        String cr = res.getString("cantrenta");
+                        s = "Id:" + x + "     Titulo:" + t + "     Precio de compra:" + pc + "     Cantidad para compra:" + cc + "     Precio de renta:" + pr + "     Cantidad para renta:" + cr;
                         m.addElement(s);
                     }
 
                 }
                 list.setModel(m);
                 conn.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
-        }else if(rtitulo.isSelected()){
-            try{
-                while(res.next()){
-                    String t=res.getString("titulo");
-                    if(t.toUpperCase().contains(y.toUpperCase())){
-                        String x=res.getString("Id");
-                        String pc=res.getString("costcompra");
-                        String cc=res.getString("cantcompra");
-                        String pr=res.getString("costrenta");
-                        String cr=res.getString("cantrenta");
-                        s="Id:"+x+"     Titulo:"+t+"     Precio de compra:"+pc+"     Cantidad para compra:"+cc+"     Precio de renta:"+pr+"     Cantidad para renta:"+cr;
+        } else if (rtitulo.isSelected()) {
+            try {
+                while (res.next()) {
+                    String t = res.getString("titulo");
+                    if (t.toUpperCase().contains(y.toUpperCase())) {
+                        String x = res.getString("Id");
+                        String pc = res.getString("costcompra");
+                        String cc = res.getString("cantcompra");
+                        String pr = res.getString("costrenta");
+                        String cr = res.getString("cantrenta");
+                        s = "Id:" + x + "     Titulo:" + t + "     Precio de compra:" + pc + "     Cantidad para compra:" + cc + "     Precio de renta:" + pr + "     Cantidad para renta:" + cr;
                         m.addElement(s);
                     }
 
                 }
                 list.setModel(m);
                 conn.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
-        }else{
+        } else {
             err.setMsg("Debes seleccionar ID o Titulo");
-            try{
+            try {
                 conn.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
             err.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
-        if(login){
-            
-        }else{
+        int i=0;
+        boolean ban = true;
+        String id, idc;
+        if (login) {
+            if (list.isSelectionEmpty()) {
+                err.setMsg("Debes seleccionar un artículo");
+                err.setVisible(true);
+            } else {
+                String seleccion = list.getSelectedValue().toString();
+                id = "";
+                char c;
+                while ((c = seleccion.charAt(i)) != ' ') {
+                    if(i>2)
+                    {id += c;}
+                    i++;
+                }
+                conexion("SELECT * FROM articulos");
+                try {
+                    while (res.next() && ban) {
+                        idc = res.getString("Id");
+                        if (id.equals(idc)) {
+                            int cant=Integer.parseInt(res.getString("cantrenta"));
+                            if(cant>0){
+                                float pc=Float.parseFloat(res.getString("costrenta"));
+                                rentas.addElement("ID: "+id+"     $"+pc);
+                                lis.setmodl2(rentas, pc);
+                                total+=pc;
+                                lis.setVisible(true);
+                            }else{
+                                err.setMsg("No hay articulos disponibles");
+                                err.setVisible(true);
+                            }
+                            ban=false;
+                        }
+                    }
+
+                } catch (Exception w) {
+                    System.err.println(w);
+                }
+            }
+        } else {
             JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
         }
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-        if(login){
-            
-        }else{
+        if (login) {
+
+        } else {
             JOptionPane.showMessageDialog(rootPane, "No se ha ingresado cliente");
         }
     }//GEN-LAST:event_jLabel9MouseClicked
@@ -536,13 +671,61 @@ public class Usuario extends javax.swing.JFrame {
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
         // intenta ingresar cliente
+        String x, info = "";
+        boolean ban = true;
         String cliente = JOptionPane.showInputDialog("Ingrese id");
+        conexion("SELECT * FROM clientes");
+        try {
+            while (res.next() && ban) {
+                x = res.getString("Id");
+                if (cliente.equals(x)) {
+                    idlog = x;
+                    info = res.getString("nombre");
+                    ban = false;
+                }
+            }
+            conn.close();
+        } catch (Exception r) {
+            System.err.println(r);
+        }
+        if (ban) {
+            err.setMsg("ID no encontrada");
+            err.setVisible(true);
+        } else {
+            lblcliente.setText("Cliente: " + info);
+            login = true;
+        }
         //si cliente existe
-        String info = "nombre";
-        lblcliente.setText("Cliente: "+info);
+
         //sino
-            //mensaje error, no existe cliente
+        //mensaje error, no existe cliente
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        nclient.setVisible(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        delcl.setVisible(true);
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        modcl.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Main m = new Main();
+        m.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -580,6 +763,8 @@ public class Usuario extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

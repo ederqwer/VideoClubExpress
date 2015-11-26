@@ -13,85 +13,109 @@ import javax.swing.DefaultListModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author PC
  */
 public class administrador extends javax.swing.JFrame {
-String path;
-String cad;
-String url;
-ResultSet res;
-Connection conn;
-DefaultListModel model1 = new DefaultListModel();
-DefaultListModel model2 = new DefaultListModel();
-DefaultListModel model3 = new DefaultListModel();
-PreparedStatement pstm;
+    int op;
+    modificarusuario modusr;
+    String path;
+    String cad;
+    String url;
+    ResultSet res;
+    Connection conn;
+    DefaultListModel model1 = new DefaultListModel();
+    DefaultListModel model2 = new DefaultListModel();
+    DefaultListModel model3 = new DefaultListModel();
+    PreparedStatement pstm;
+    Error err;
+    nuevoarticulo nar;
+    modificararticulo modar;
+    nuevocliente ncl;
+    modificacliente modcl;
+    eliminarusuario delusr;
+    eliminararticulo delar;
+    eliminacliente delcl;
+    modadmin moda;
     /**
-     * Creates new form 
+     * Creates new form
      */
-    public administrador()  {
+    public administrador() {
         initComponents();
-        
+        op=0;
+        this.setLocationRelativeTo(null);
         list1.setModel(model1);
         list2.setModel(model2);
         list3.setModel(model3);
+        modusr = new modificarusuario();
+        err = new Error();
+        nar = new nuevoarticulo();
+        modar=new modificararticulo();
+        ncl=new nuevocliente();
+        modcl=new modificacliente();
+        delusr=new eliminarusuario();
+        delar=new eliminararticulo();
+        delcl=new eliminacliente();
         rellenar();
-        
+        busqueda.setLocationRelativeTo(null);
+        moda=new modadmin();
     }
-    
-    void rellenar(){
-        try{
-            conexion();
-            link ("SELECT * FROM usuarios");
-           while(res.next()){
-               
-               model1.addElement(res.getString("Id")+" "+res.getString("nombre"));
-            } 
-           conn.close();
-           conexion();
-           link ("SELECT * FROM articulos");
-           while(res.next()){
-               
-               model2.addElement(res.getString("Id")+" "+res.getString("titulo"));
-            }
-           conn.close();
-           conexion();
-           link ("SELECT * FROM clientes");
-           while(res.next()){
-               model3.addElement(res.getString("Id")+" "+res.getString("nombre"));
-            }
-           conn.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-    void conexion() {
-        try{
-            path = System.getProperty("user.dir");
-                path += "\\videoclub.accdb";
-                  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 
-                    System.out.println(path);
-                url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-                conn = DriverManager.getConnection(url);
-        }catch(Exception e){
+    void rellenar() {
+        try {
+            conexion();
+            link("SELECT * FROM usuarios");
+            while (res.next()) {
+
+                model1.addElement(res.getString("Id") + " " + res.getString("nombre"));
+            }
+            conn.close();
+            conexion();
+            link("SELECT * FROM articulos");
+            while (res.next()) {
+
+                model2.addElement(res.getString("Id") + " " + res.getString("titulo"));
+            }
+            conn.close();
+            conexion();
+            link("SELECT * FROM clientes");
+            while (res.next()) {
+                model3.addElement(res.getString("Id") + " " + res.getString("nombre"));
+            }
+            conn.close();
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
     }
- void link(String inf){
-     try{
-                        cad  =inf;
-                
-                pstm = conn.prepareStatement( cad );
-                res = pstm.executeQuery(); 
-                
-            }catch(Exception e){
-                System.out.println(e);
-            }
- }
+
+    void conexion() {
+        try {
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+            System.out.println(path);
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    void link(String inf) {
+        try {
+            cad = inf;
+
+            pstm = conn.prepareStatement(cad);
+            res = pstm.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,6 +125,12 @@ PreparedStatement pstm;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        busqueda = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        parametro = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -126,8 +156,88 @@ PreparedStatement pstm;
         modificar3 = new javax.swing.JButton();
         eliminar3 = new javax.swing.JButton();
         buscar3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+
+        busqueda.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        busqueda.setTitle("Búsqueda");
+        busqueda.setAlwaysOnTop(true);
+        busqueda.setMinimumSize(new java.awt.Dimension(400, 182));
+        busqueda.setResizable(false);
+
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel4.setText("Parámetro de búsqueda:");
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(155, 155, 155))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(parametro))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(parametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout busquedaLayout = new javax.swing.GroupLayout(busqueda.getContentPane());
+        busqueda.getContentPane().setLayout(busquedaLayout);
+        busquedaLayout.setHorizontalGroup(
+            busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        busquedaLayout.setVerticalGroup(
+            busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Administrador");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -162,6 +272,11 @@ PreparedStatement pstm;
         modificar1.setContentAreaFilled(false);
         modificar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         modificar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modificar1MouseClicked(evt);
+            }
+        });
         modificar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificar1ActionPerformed(evt);
@@ -173,6 +288,11 @@ PreparedStatement pstm;
         eliminar1.setContentAreaFilled(false);
         eliminar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         eliminar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminar1MouseClicked(evt);
+            }
+        });
         eliminar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminar1ActionPerformed(evt);
@@ -184,6 +304,11 @@ PreparedStatement pstm;
         buscar1.setContentAreaFilled(false);
         buscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscar1MouseClicked(evt);
+            }
+        });
         buscar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscar1ActionPerformed(evt);
@@ -230,6 +355,11 @@ PreparedStatement pstm;
         modificar2.setContentAreaFilled(false);
         modificar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         modificar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modificar2MouseClicked(evt);
+            }
+        });
         modificar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificar2ActionPerformed(evt);
@@ -241,6 +371,11 @@ PreparedStatement pstm;
         agregar2.setContentAreaFilled(false);
         agregar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         agregar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        agregar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregar2MouseClicked(evt);
+            }
+        });
         agregar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregar2ActionPerformed(evt);
@@ -252,6 +387,11 @@ PreparedStatement pstm;
         eliminar2.setContentAreaFilled(false);
         eliminar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         eliminar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminar2MouseClicked(evt);
+            }
+        });
         eliminar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminar2ActionPerformed(evt);
@@ -263,6 +403,11 @@ PreparedStatement pstm;
         buscar2.setContentAreaFilled(false);
         buscar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buscar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscar2MouseClicked(evt);
+            }
+        });
         buscar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscar2ActionPerformed(evt);
@@ -321,6 +466,11 @@ PreparedStatement pstm;
         agregar3.setContentAreaFilled(false);
         agregar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         agregar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        agregar3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregar3MouseClicked(evt);
+            }
+        });
         agregar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregar3ActionPerformed(evt);
@@ -332,6 +482,11 @@ PreparedStatement pstm;
         modificar3.setContentAreaFilled(false);
         modificar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         modificar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        modificar3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modificar3MouseClicked(evt);
+            }
+        });
         modificar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificar3ActionPerformed(evt);
@@ -343,6 +498,11 @@ PreparedStatement pstm;
         eliminar3.setContentAreaFilled(false);
         eliminar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         eliminar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        eliminar3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminar3MouseClicked(evt);
+            }
+        });
         eliminar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminar3ActionPerformed(evt);
@@ -354,6 +514,11 @@ PreparedStatement pstm;
         buscar3.setContentAreaFilled(false);
         buscar3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buscar3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buscar3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscar3MouseClicked(evt);
+            }
+        });
         buscar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscar3ActionPerformed(evt);
@@ -392,6 +557,20 @@ PreparedStatement pstm;
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        jButton2.setText("Logout");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Modificar datos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -399,11 +578,16 @@ PreparedStatement pstm;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(162, 162, 162)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
@@ -434,7 +618,11 @@ PreparedStatement pstm;
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -447,7 +635,7 @@ PreparedStatement pstm;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -455,20 +643,19 @@ PreparedStatement pstm;
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    try {
-        // TODO add your handling code here:
-        conn.close();
-    } catch (SQLException ex) {
-        Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            // TODO add your handling code here:
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosing
-    
-    void update() throws SQLException{
-        System.out.println("aki");
+
+    void update() throws SQLException {
         conn.close();
         model1 = null;
         model2 = null;
@@ -533,8 +720,241 @@ PreparedStatement pstm;
 
     private void agregar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregar1MouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_agregar1MouseClicked
+
+    private void modificar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificar1MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list1.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un usuario");
+            err.setVisible(true);
+        } else {
+            String seleccion = list1.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            modusr.setID(id);
+            modusr.setadm(this);
+            modusr.setVisible(true);
+        }
+
+    }//GEN-LAST:event_modificar1MouseClicked
+
+    private void agregar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregar2MouseClicked
+        // TODO add your handling code here:
+        nar.setadm(this);
+        nar.setVisible(true);
+    }//GEN-LAST:event_agregar2MouseClicked
+
+    private void modificar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificar2MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list2.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un artículo");
+            err.setVisible(true);
+        } else {
+            String seleccion = list2.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            modar.setID(id);
+            modar.setadm(this);
+            modar.setVisible(true);
+        }
+    }//GEN-LAST:event_modificar2MouseClicked
+
+    private void agregar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregar3MouseClicked
+        // TODO add your handling code here:
+        ncl.setadm(this);
+        ncl.setVisible(true);
+    }//GEN-LAST:event_agregar3MouseClicked
+
+    private void modificar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificar3MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list3.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un cliente");
+            err.setVisible(true);
+        } else {
+            String seleccion = list3.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            modcl.setid(id);
+            modcl.setadm(this);
+            modcl.setVisible(true);
+        }
+    }//GEN-LAST:event_modificar3MouseClicked
+
+    private void eliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminar1MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list1.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un usuario");
+            err.setVisible(true);
+        } else {
+            String seleccion = list1.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            delusr.setID(id);
+            delusr.setadm(this);
+            delusr.setVisible(true);
+        }
+    }//GEN-LAST:event_eliminar1MouseClicked
+
+    private void eliminar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminar2MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list2.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un artículo");
+            err.setVisible(true);
+        } else {
+            String seleccion = list2.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            delar.setID(id);
+            delar.setadm(this);
+            delar.setVisible(true);
+        }
+    }//GEN-LAST:event_eliminar2MouseClicked
+
+    private void eliminar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminar3MouseClicked
+        // TODO add your handling code here:
+        int i = 0;
+        if (list3.isSelectionEmpty()) {
+            err.setMsg("Debes seleccionar un cliente");
+            err.setVisible(true);
+        } else {
+            String seleccion = list3.getSelectedValue().toString();
+            String id = "";
+            char c;
+            while ((c = seleccion.charAt(i)) != ' ') {
+                id += c;
+                i++;
+            }
+            delcl.setid(id);
+            delcl.setadm(this);
+            delcl.setVisible(true);
+        }
+    }//GEN-LAST:event_eliminar3MouseClicked
+
+    private void buscar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar1MouseClicked
+        // TODO add your handling code here:
+        op=1;
+        busqueda.setVisible(true);
+        
+    }//GEN-LAST:event_buscar1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel aux=new DefaultListModel();
+        String par=parametro.getText();
+        String id, nom;
+        if(par.isEmpty()){
+            err.setMsg("Debes ingresar un parametro de búsqueda");
+            err.setVisible(true);
+        }else{
+        switch(op){
+            case 1:
+                conexion();
+                link("SELECT * FROM usuarios");
+                System.out.println("see");
+                try{
+                while(res.next()){
+                    id=res.getString("Id");
+                    nom=res.getString("nombre");
+                    if(id.toUpperCase().contains(par.toUpperCase())||nom.toUpperCase().contains(par.toUpperCase())){
+                        aux.addElement(id+" "+nom);
+                    }
+                }
+                    }catch(Exception h){
+                        System.err.println(h);
+                    }
+                list1.setModel(aux);
+                break;
+            case 2:
+                conexion();
+                link("SELECT * FROM articulos");
+                System.out.println("see");
+                try{
+                while(res.next()){
+                    id=res.getString("Id");
+                    nom=res.getString("titulo");
+                    if(id.toUpperCase().contains(par.toUpperCase())||nom.toUpperCase().contains(par.toUpperCase())){
+                        aux.addElement(id+" "+nom);
+                    }
+                }
+                    }catch(Exception h){
+                        System.err.println(h);
+                    }
+                list2.setModel(aux);
+                break;
+            case 3:
+                conexion();
+                link("SELECT * FROM clientes");
+                try{
+                while(res.next()){
+                    id=res.getString("Id");
+                    nom=res.getString("nombre");
+                    if(id.toUpperCase().contains(par.toUpperCase())||nom.toUpperCase().contains(par.toUpperCase())){
+                        aux.addElement(id+" "+nom);
+                    }
+                }
+                    }catch(Exception h){
+                        System.err.println(h);
+                    }
+                list3.setModel(aux);
+                break;
+        }
+        busqueda.setVisible(false);
+        }
+        parametro.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buscar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar2MouseClicked
+        // TODO add your handling code here:
+        op=2;
+        busqueda.setVisible(true);
+        
+    }//GEN-LAST:event_buscar2MouseClicked
+
+    private void buscar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar3MouseClicked
+        // TODO add your handling code here:
+        op=3;
+        busqueda.setVisible(true);
+        
+    }//GEN-LAST:event_buscar3MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Main m= new Main();
+        m.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        moda.setadm(this);
+        moda.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -578,25 +998,25 @@ PreparedStatement pstm;
     private javax.swing.JButton buscar1;
     private javax.swing.JButton buscar2;
     private javax.swing.JButton buscar3;
+    private javax.swing.JDialog busqueda;
     private javax.swing.JButton eliminar1;
     private javax.swing.JButton eliminar2;
     private javax.swing.JButton eliminar3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList list1;
     private javax.swing.JList list2;
@@ -604,5 +1024,6 @@ PreparedStatement pstm;
     private javax.swing.JButton modificar1;
     private javax.swing.JButton modificar2;
     private javax.swing.JButton modificar3;
+    private javax.swing.JTextField parametro;
     // End of variables declaration//GEN-END:variables
 }

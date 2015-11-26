@@ -19,6 +19,8 @@ public class Main extends javax.swing.JFrame {
     String path, cad, url;
     PreparedStatement pstm;
     ResultSet res;
+    administrador adm;
+    nuevoadmin nad;
      void conexion(String inf){
      try{
                         cad  =inf;
@@ -46,8 +48,22 @@ public class Main extends javax.swing.JFrame {
         usr = new Usuario();
         err=new Error();
         this.setLocationRelativeTo(null);
-        
-        
+        adm=new administrador();
+        conexion("SELECT * FROM administrador");
+        boolean i=false;
+        try{
+            while (res.next()){
+                i=true;
+            }
+            conn.close();
+        }catch(Exception s){
+            System.err.println(s);
+        }
+        if(i==false){
+            nad=new nuevoadmin();
+            nad.setVisible(true);
+            this.setVisible(false);
+        }
     }
     void esteesparainsertar(){
 //         Statement st= conn.createStatement();
@@ -78,7 +94,9 @@ public class Main extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setAlwaysOnTop(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -233,8 +251,8 @@ Usuario usr;
     private void bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt1ActionPerformed
         String id = txt1.getText();
         String pw = txt2.getText();
-        conexion("SELECT Administrador.Id, Administrador.Password FROM Administrador");
-            boolean start = false;
+        boolean admin=false;
+            boolean start = true;
         if(id.equals("") && pw.equals("")){
             err.setMsg("Debes ingresar el nombre de usuario y la contraseña");
             try{
@@ -263,25 +281,32 @@ Usuario usr;
             err.setVisible(true);
         }
         else{    
+            
         try{
-            while(res.next()){
+            conexion("SELECT administrador.Id, administrador.Password FROM administrador");
+            while(res.next() && start){
                 String x = res.getString("Id");
                 String y = res.getString("Password");
                 if(x.contains(id) && y.contains(pw)){
-                    start = true; break;
+                    admin=true;
+                    start = false;
                 }
-                
+            }
+            if(start){
+               conexion("SELECT usuarios.Id, usuarios.Password FROM usuarios");
+            while(res.next() && start){
+                String x = res.getString("Id");
+                String y = res.getString("Password");
+                if(x.contains(id) && y.contains(pw)){
+                    start = false;
+                }
+            } 
             }
             conn.close();
         }catch(Exception e){
             System.out.println(e);
         }
         if(start)  {
-            usr.setVisible(true);
-            
-            this.dispose();
-        }
-        else{
             err.setMsg("Nombre de usuario o contraseña no válidos!!");
             try{
                 conn.close();
@@ -289,6 +314,15 @@ Usuario usr;
                 System.err.println(e);
             }
             err.setVisible(true);
+        }
+        else{
+            if (admin){
+                adm.setVisible(true);
+                this.dispose();
+            }else{
+                usr.setVisible(true);
+                this.dispose();
+            }
         }
         }
     }//GEN-LAST:event_bt1ActionPerformed
