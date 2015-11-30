@@ -13,7 +13,9 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+
 public class Main extends javax.swing.JFrame {
+
     Connection conn;
     Error err;
     String path, cad, url;
@@ -21,23 +23,23 @@ public class Main extends javax.swing.JFrame {
     ResultSet res;
     administrador adm;
     nuevoadmin nad;
-     void conexion(String inf){
-     try{
-                        cad  =inf;
-                path = System.getProperty("user.dir");
-                path += "\\videoclub.accdb";
-                  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 
-                    System.out.println(path);
-                url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-                conn = DriverManager.getConnection(url);
-                pstm = conn.prepareStatement( cad );
-                res = pstm.executeQuery(); 
-                
-            }catch(Exception e){
-                System.out.println(e);
-            }
- }
+    void conexion(String inf) {
+        try {
+            cad = inf;
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+            pstm = conn.prepareStatement(cad);
+            res = pstm.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * Creates new form Main
      */
@@ -46,31 +48,32 @@ public class Main extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo32px.png"));
         setIconImage(icon);
         usr = new Usuario();
-        err=new Error();
+        err = new Error();
         this.setLocationRelativeTo(null);
-        adm=new administrador();
+        adm = new administrador();
         conexion("SELECT * FROM administrador");
-        boolean i=false;
-        try{
-            while (res.next()){
-                i=true;
+        boolean i = false;
+        try {
+            while (res.next()) {
+                i = true;
             }
             conn.close();
-        }catch(Exception s){
+        } catch (Exception s) {
             System.err.println(s);
         }
-        if(i==false){
-            nad=new nuevoadmin();
+        if (i == false) {
+            nad = new nuevoadmin();
             nad.setVisible(true);
             this.setVisible(false);
         }
     }
-    void esteesparainsertar(){
+
+    void esteesparainsertar() {
 //         Statement st= conn.createStatement();
 //        String up = "INSERT into administrador(Password,Nombre,Fecha,Direccion,Telefono) VALUES('"+password.getText()+"','"+nombre.getText()+"','"+fecha.getText()+"','"+direccion.getText()+"','"+telefono.getText()+"')";
 //        st.executeUpdate(up);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,79 +254,77 @@ Usuario usr;
     private void bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt1ActionPerformed
         String id = txt1.getText();
         String pw = txt2.getText();
-        boolean admin=false;
-            boolean start = true;
-        if(id.equals("") && pw.equals("")){
+        boolean admin = false;
+        boolean start = true;
+        if (id.equals("") && pw.equals("")) {
             err.setMsg("Debes ingresar el nombre de usuario y la contraseña");
-            try{
+            try {
                 conn.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
             err.setVisible(true);
-            
-        }else if(id.equals("")){
+
+        } else if (id.equals("")) {
             err.setMsg("Nombre de usuario incorrecto");
-            try{
+            try {
                 conn.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
             err.setVisible(true);
-            
-        }else if(pw.equals("")){
+
+        } else if (pw.equals("")) {
             err.setMsg("Contraseña incorrecta");
-            try{
+            try {
                 conn.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
             err.setVisible(true);
-        }
-        else{    
-            
-        try{
-            conexion("SELECT administrador.Id, administrador.Password FROM administrador");
-            while(res.next() && start){
-                String x = res.getString("Id");
-                String y = res.getString("Password");
-                if(x.contains(id) && y.contains(pw)){
-                    admin=true;
-                    start = false;
+        } else {
+
+            try {
+                conexion("SELECT administrador.Id, administrador.Password FROM administrador");
+                while (res.next() && start) {
+                    String x = res.getString("Id");
+                    String y = res.getString("Password");
+                    if (x.contains(id) && y.contains(pw)) {
+                        admin = true;
+                        start = false;
+                    }
                 }
-            }
-            if(start){
-               conexion("SELECT usuarios.Id, usuarios.Password FROM usuarios");
-            while(res.next() && start){
-                String x = res.getString("Id");
-                String y = res.getString("Password");
-                if(x.contains(id) && y.contains(pw)){
-                    start = false;
+                if (start) {
+                    conexion("SELECT usuarios.Id, usuarios.Password FROM usuarios");
+                    while (res.next() && start) {
+                        String x = res.getString("Id");
+                        String y = res.getString("Password");
+                        if (x.contains(id) && y.contains(pw)) {
+                            start = false;
+                        }
+                    }
                 }
-            } 
-            }
-            conn.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        if(start)  {
-            err.setMsg("Nombre de usuario o contraseña no válidos!!");
-            try{
                 conn.close();
-            }catch(Exception e){
-                System.err.println(e);
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            err.setVisible(true);
-        }
-        else{
-            if (admin){
-                adm.setVisible(true);
-                this.dispose();
-            }else{
-                usr.setVisible(true);
-                this.dispose();
+            if (start) {
+                err.setMsg("Nombre de usuario o contraseña no válidos!!");
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+                err.setVisible(true);
+            } else {
+                if (admin) {
+                    adm.setVisible(true);
+                    this.dispose();
+                } else {
+                    usr.setVisible(true);
+                    this.dispose();
+                }
             }
-        }
         }
     }//GEN-LAST:event_bt1ActionPerformed
 

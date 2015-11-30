@@ -54,8 +54,6 @@ public class modificacliente extends javax.swing.JFrame {
             path = System.getProperty("user.dir");
             path += "\\videoclub.accdb";
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-            System.out.println(path);
             url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
             conn = DriverManager.getConnection(url);
             pstm = conn.prepareStatement(cad);

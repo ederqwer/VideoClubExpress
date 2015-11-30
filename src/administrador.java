@@ -94,8 +94,6 @@ public class administrador extends javax.swing.JFrame {
             path = System.getProperty("user.dir");
             path += "\\videoclub.accdb";
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-            System.out.println(path);
             url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
             conn = DriverManager.getConnection(url);
         } catch (Exception e) {
@@ -876,7 +874,6 @@ public class administrador extends javax.swing.JFrame {
             case 1:
                 conexion();
                 link("SELECT * FROM usuarios");
-                System.out.println("see");
                 try{
                 while(res.next()){
                     id=res.getString("Id");
@@ -893,7 +890,6 @@ public class administrador extends javax.swing.JFrame {
             case 2:
                 conexion();
                 link("SELECT * FROM articulos");
-                System.out.println("see");
                 try{
                 while(res.next()){
                     id=res.getString("Id");

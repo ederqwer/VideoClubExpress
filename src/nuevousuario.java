@@ -12,59 +12,63 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author PC
  */
 public class nuevousuario extends javax.swing.JFrame {
-String path;
-String cad;
-String url;
-ResultSet res;
-Connection conn;
-Usuario u;
-PreparedStatement pstm;
+
+    String path;
+    String cad;
+    String url;
+    ResultSet res;
+    Connection conn;
+    Usuario u;
+    PreparedStatement pstm;
+
     /**
      * Creates new form nuevocliente
      */
 
-void setu (Usuario us){
-    u = us;
-}
-  void conexion() {
-        try{
-            path = System.getProperty("user.dir");
-                path += "\\videoclub.accdb";
-                  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+    void setu(Usuario us) {
+        u = us;
+    }
 
-                    System.out.println(path);
-                url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-                conn = DriverManager.getConnection(url);
-        }catch(Exception e){
+    void conexion() {
+        try {
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
+
     }
- void link(String inf){
-     try{
-                        cad  =inf;
-                
-                pstm = conn.prepareStatement( cad );
-                if(pstm.execute())  res = pstm.executeQuery(); 
-                
-            }catch(Exception e){
-                System.out.println(e);
+
+    void link(String inf) {
+        try {
+            cad = inf;
+
+            pstm = conn.prepareStatement(cad);
+            if (pstm.execute()) {
+                res = pstm.executeQuery();
             }
- }
-    public nuevousuario()  {
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public nuevousuario() {
         initComponents();
         adm = null;
         this.setLocationRelativeTo(null);
-        
-        
+
     }
     Error err;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,65 +228,58 @@ void setu (Usuario us){
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(t5.getText().equals("") || t6.getText().equals("") ||  t1.getText().equals("") || t2.getText().equals("") || t3.getText().equals("") || t4.getText().equals(""))
-        {
+        if (t5.getText().equals("") || t6.getText().equals("") || t1.getText().equals("") || t2.getText().equals("") || t3.getText().equals("") || t4.getText().equals("")) {
             err = new Error();
             err.setMsg("Faltan datos por ingresar");
             err.setVisible(true);
-        }else{
+        } else {
             //"INSERT INTO Alumnos (cod_alum, grupo) VALUES ('1', '1');"
-            try{
-            String cad = "VALUES ('"+t5.getText()+"','"+t1.getText()+"','"+t6.getText()+"','"+t2.getText()+"','"+t3.getText()+"',+'"+t4.getText()+"');";
-            
-                System.out.println("muaja");
+            try {
+                String cad = "VALUES ('" + t5.getText() + "','" + t1.getText() + "','" + t6.getText() + "','" + t2.getText() + "','" + t3.getText() + "',+'" + t4.getText() + "');";
                 conexion();
-                link("Select * from usuarios WHERE usuarios.Id Like '"+t5.getText()+"%'");
-                System.out.println("pase");
-                
-            if(res.next()){
-                conn.close();
-                Error err = new Error();
-                err.setMsg("Nombre de usuario ya existe");
-                err.setVisible(true);
-            }else
-            {
-                
-                conn.close();
-                conexion();
-                
-                link("INSERT INTO usuarios (Id, nombre, password, fecha, direccion, telefono) "+cad);
-                if(adm !=null){
+                link("Select * from usuarios WHERE usuarios.Id Like '" + t5.getText() + "%'");
+                if (res.next()) {
                     conn.close();
-                    System.out.println("pas");
-                    adm.update();
+                    Error err = new Error();
+                    err.setMsg("Nombre de usuario ya existe");
+                    err.setVisible(true);
+                } else {
+
+                    conn.close();
+                    conexion();
+
+                    link("INSERT INTO usuarios (Id, nombre, password, fecha, direccion, telefono) " + cad);
+                    if (adm != null) {
+                        conn.close();
+                        adm.update();
+                    }
+                    this.setVisible(false);
+
                 }
-                this.setVisible(false);
-                
-            }
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
             }
-            
-            
-            
-            
+
 //            u.setVisible(true); this.dispose(); 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    try {
-        // TODO add your handling code here:
-      if(conn!=null)  conn.close();
-    } catch (SQLException ex) {
-        Logger.getLogger(nuevousuario.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            // TODO add your handling code here:
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(nuevousuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosing
-administrador adm;
-void setadm(administrador a){
-    adm = a;
-}
+    administrador adm;
+
+    void setadm(administrador a) {
+        adm = a;
+    }
+
     /**
      * @param args the command line arguments
      */

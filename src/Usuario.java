@@ -36,8 +36,6 @@ public class Usuario extends javax.swing.JFrame {
             path = System.getProperty("user.dir");
             path += "\\videoclub.accdb";
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-            System.out.println(path);
             url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
             conn = DriverManager.getConnection(url);
             pstm = conn.prepareStatement(cad);
@@ -577,7 +575,6 @@ public class Usuario extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        System.out.println(path);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void ridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ridActionPerformed

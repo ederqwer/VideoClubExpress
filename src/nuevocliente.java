@@ -12,75 +12,77 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author PC
  */
 public class nuevocliente extends javax.swing.JFrame {
-String path;
-String cad;
-String url;
-ResultSet res;
-Connection conn;
-Usuario u;
-PreparedStatement pstm;
-administrador adm;
+
+    String path;
+    String cad;
+    String url;
+    ResultSet res;
+    Connection conn;
+    Usuario u;
+    PreparedStatement pstm;
+    administrador adm;
 
     void setadm(administrador ad) {
         this.adm = ad;
     }
+
     /**
      * Creates new form nuevocliente
      */
 
-void setu (Usuario us){
-    u = us;
-}
- void conexion(String inf){
-     try{
-                        cad  =inf;
-                path = System.getProperty("user.dir");
-                path += "\\videoclub.accdb";
-                  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+    void setu(Usuario us) {
+        u = us;
+    }
 
-                    System.out.println(path);
-                url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
-                conn = DriverManager.getConnection(url);
-                pstm = conn.prepareStatement( cad );
-                res = pstm.executeQuery(); 
-                
-            }catch(Exception e){
-                System.out.println(e);
-            }
- }
-    public nuevocliente()  {
+    void conexion(String inf) {
+        try {
+            cad = inf;
+            path = System.getProperty("user.dir");
+            path += "\\videoclub.accdb";
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + path;
+            conn = DriverManager.getConnection(url);
+            pstm = conn.prepareStatement(cad);
+            res = pstm.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public nuevocliente() {
         initComponents();
         conexion("SELECT clientes.Id FROM clientes");
-        try{
-        
-        String num = "";
-         while(res.next()){
-          String aux  = res.getString("Id");
-           if(num.compareTo(aux)<0)  num = aux; 
-               System.out.println(aux);
-        }
-         conn.close();
-        int n=0;
-        if(!num.equals("")){
-             n = Integer.parseInt(num)+1;
-        }else {
-            n = 7144826;
-        }
-        lblid.setText(n+"");
-        
-        }
-        catch(Exception e){
+        try {
+
+            String num = "";
+            while (res.next()) {
+                String aux = res.getString("Id");
+                if (num.compareTo(aux) < 0) {
+                    num = aux;
+                }
+            }
+            conn.close();
+            int n = 0;
+            if (!num.equals("")) {
+                n = Integer.parseInt(num) + 1;
+            } else {
+                n = 7144826;
+            }
+            lblid.setText(n + "");
+
+        } catch (Exception e) {
             System.out.println(e);
         }
         this.setLocationRelativeTo(null);
     }
     Error err;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -231,37 +233,35 @@ void setu (Usuario us){
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(t1.getText().equals("") || t2.getText().equals("") || t3.getText().equals("") || t4.getText().equals(""))
-        {
+        if (t1.getText().equals("") || t2.getText().equals("") || t3.getText().equals("") || t4.getText().equals("")) {
             err = new Error();
             err.setMsg("Faltan datos por ingresar");
             err.setVisible(true);
-        }else{
+        } else {
             //"INSERT INTO Alumnos (cod_alum, grupo) VALUES ('1', '1');"
-            String cad = "VALUES ('"+lblid.getText()+"','"+t1.getText()+"','"+t2.getText()+"','"+t3.getText()+"',+'"+t4.getText()+"');";
-            System.out.println(cad);
-            conexion("INSERT INTO clientes (Id, nombre, fecha, direccion, telefono) "+cad);
-            
-            
+            String cad = "VALUES ('" + lblid.getText() + "','" + t1.getText() + "','" + t2.getText() + "','" + t3.getText() + "',+'" + t4.getText() + "');";
+            conexion("INSERT INTO clientes (Id, nombre, fecha, direccion, telefono) " + cad);
+
             try {
                 conn.close();
                 if (adm != null) {
-                        conn.close();
-                        adm.update();
-                    }
+                    conn.close();
+                    adm.update();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(nuevocliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (u!=null){
-            u.setVisible(true);}
-            int x=Integer.parseInt(lblid.getText());
+            if (u != null) {
+                u.setVisible(true);
+            }
+            int x = Integer.parseInt(lblid.getText());
             x++;
-            lblid.setText(""+x);
+            lblid.setText("" + x);
             t1.setText("");
             t2.setText("");
             t3.setText("");
             t4.setText("");
-            this.dispose(); 
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
